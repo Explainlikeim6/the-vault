@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Vault - a permanent history</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/logo-32.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="icons/logo-128.png">
+  <script src="theme-init.js"></script>
+  <link rel="stylesheet" href="history.css">
+  <link rel="stylesheet" href="appearance.css">
+  <script type="module" src="history.js"></script>
+</head>
+
+<body>
+  <button id="sidebar-backdrop" class="sidebar-backdrop" aria-label="Close navigation" hidden></button>
+  <aside class="sidebar" aria-label="History navigation">
+    <a class="brand" href="history.html"><img class="brand-icon" src="icons/logo-48.png" width="29" height="29" alt=""> The Vault</a>
+    <nav aria-label="Archive sections">
+      <button class="nav-item active" data-kind="visit"><span data-icon="globe"></span><span>Browsing</span><b id="visit-count">0</b></button>
+      <button class="nav-item" data-kind="download"><span data-icon="download"></span><span>Downloads</span><b id="download-count">0</b></button>
+      <button class="nav-item" id="devices-open" title="Tabs from other devices"><span data-icon="devices"></span><span>Other devices</span></button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button class="nav-item" id="browsing-data-open"><span data-icon="trash"></span><span>Delete browsing data</span><span class="external-icon" data-icon="external"></span></button>
+      <div class="storage-card">
+        <div class="storage-summary"><span>Archive stored locally</span><strong id="storage-size">—</strong></div>
+        <button class="text-button" id="storage-manage"><span>Archive settings</span><span data-icon="settings"></span></button>
+      </div>
+    </div>
+  </aside>
+  <main>
+    <header class="utility-bar" aria-label="Appearance and backups">
+      <button class="button theme-toggle" id="theme-toggle" type="button" aria-pressed="false" title="Switch appearance"><span data-icon="moon"></span><span class="control-label">Dark mode</span></button>
+      <div class="toolbar-utilities">
+        <button class="button" id="restore-top" aria-label="Import backup" title="Import backup"><span data-icon="upload"></span><span class="control-label">Import</span></button>
+        <button class="button" id="backup-top" aria-label="Export backup" title="Export backup"><span data-icon="download"></span><span class="control-label">Export</span></button>
+      </div>
+    </header>
+    <header class="topbar" aria-label="History tools">
+      <button class="icon-button" id="sidebar-toggle" aria-label="Show or hide sidebar" aria-expanded="true" title="Show or hide sidebar"><span data-icon="menu"></span></button>
+      <div class="search-tools" id="search-tools">
+        <div class="main-search"><span data-icon="search"></span><input id="search" type="search" autofocus placeholder="Search history" title="Search titles, URLs, domains, or filenames. Use quoted phrases for an exact phrase." aria-label="Search titles, URLs, domains, timestamps, and filenames"><button id="clear-search" type="button" class="button search-clear" aria-label="Clear search" title="Clear search" hidden><span data-icon="close"></span></button></div>
+        <button type="button" class="button" id="date-range-button" popovertarget="date-popover" aria-expanded="false" aria-haspopup="dialog" title="Date range"><span data-icon="calendar"></span><span class="control-label">Date range</span></button>
+        <div class="search-actions" id="search-actions" hidden>
+          <button class="button" id="select-all-results">Select all results</button>
+          <button class="button danger" id="delete-matches" aria-label="Delete all matching results" title="Delete all matching results"><span data-icon="trash"></span><span>Delete results</span></button>
+        </div>
+      </div>
+      <div class="selection-tools" id="selection-tools" hidden>
+        <span id="selected-count" aria-live="polite">0 selected</span>
+        <button class="button" id="select-all-selected" title="Select all results across every page">Select all</button>
+        <button class="button" id="clear-selection" aria-label="Cancel selection" title="Cancel selection"><span data-icon="close"></span></button>
+        <button class="button danger" id="delete-selected" disabled title="Delete selected records"><span data-icon="trash"></span><span>Delete selected</span></button>
+      </div>
+      <button class="icon-button" id="view-options-toggle" popovertarget="view-popover" aria-label="View options" title="View options"><span data-icon="more"></span></button>
+    </header>
+    <div class="page">
+      <div id="notice" class="notice" hidden></div>
+      <div id="error-banner" class="notice error" role="alert" hidden></div>
+      <section id="history-view" aria-label="History archive">
+        <div id="active-filters" class="active-filters" aria-label="Active filters" hidden>
+          <span id="date-filter-chip" class="filter-chip" hidden><button type="button" id="date-filter-open" aria-haspopup="dialog" aria-expanded="false" aria-label="Edit date range"><span id="date-filter-label"></span></button><button type="button" id="clear-date-filter" aria-label="Remove date filter">×</button></span>
+          <span id="domain-filter-chip" class="filter-chip" hidden><span id="domain-filter-label"></span><button type="button" id="clear-domain-filter" aria-label="Remove domain filter">×</button></span>
+          <button type="button" class="text-button" id="reset">Reset filters</button>
+        </div>
+        <div id="exact-url" class="notice" hidden></div>
+        <div id="timeline" aria-label="History results" aria-busy="true"></div>
+        <div class="pagination"><button id="prev" class="button">← Previous</button><span id="page-label"></span><button id="next" class="button">Next →</button></div>
+        <span id="result-count" class="sr-only" aria-live="polite">Loading…</span>
+        <footer><button id="about-open" class="text-button">About your archive</button></footer>
+      </section>
+      <section id="devices-view" aria-labelledby="devices-title" hidden>
+        <div class="results-toolbar devices-toolbar"><div class="results-label"><h2 id="devices-title">Tabs from other devices</h2><span id="devices-count" aria-live="polite"></span></div><button class="button" id="devices-refresh">Refresh tabs</button></div>
+        <p class="devices-help">Open tabs shared by your browser’s sync. Sign in to the same browser account on your devices and enable open-tab sync. These are live synced tabs, separate from your saved history archive.</p>
+        <label class="search-box device-search"><span aria-hidden="true">⌕</span><input type="search" id="device-search" aria-label="Search tabs from other devices" placeholder="Search synced tabs by title, URL, or device…"></label>
+        <div id="devices-list" aria-live="polite"></div>
+        <p id="devices-updated" class="devices-help"></p>
+      </section>
+    </div>
+  </main>
+  <div id="view-popover" class="menu-popover" popover aria-label="View options">
+    <label class="menu-check"><input type="checkbox" id="group-hours">Group by hour</label>
+  </div>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title">
+    <form method="dialog"><h2 id="confirm-title"></h2><p id="confirm-body"></p><div id="confirm-detail" class="confirm-detail"></div><label class="check-option" id="browser-option"><input type="checkbox" id="browser-too"><span>Also delete from the browser’s separate history<strong>Navigation: Removes ALL browser visits to each selected URL, including visits outside this selection.<br>Downloads: removes the browser’s download record. Files are never deleted.</strong></span></label><p class="muted">This cannot be undone. Export a backup first if you may need these records again.</p><div class="dialog-actions"><button class="button" value="cancel">Cancel</button><button class="button button-danger" id="confirm-do" value="default">Delete records</button></div></form>
+  </dialog>
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <div class="settings-header"><div><div class="eyebrow">MAKE IT YOURS</div><h2 id="settings-title">Archive settings</h2></div><button id="settings-close" class="icon-button" aria-label="Close settings">×</button></div>
+    <div id="settings-error" class="notice error" role="alert" hidden></div>
+    <section><h3>A permanent vault</h3><p>Visits and download records are stored on this device, in this browser profile. There is no automatic deletion. Clearing the browser’s history does not clear this archive. Uninstalling this extension or deleting its profile does.</p><p>Existing history is imported once on installation. History already removed by the browser cannot be recovered. Recording requires the extension to be enabled. Private/incognito browsing is excluded.</p><div id="import-status" class="status-box"></div><button class="button" id="retry-import" hidden>Retry import</button><div id="purge-status" class="status-box" hidden></div></section>
+    <section><h3>Domain blacklist</h3><p>Exclude a domain and all its subdomains. Adding a rule also deletes existing matching archived visits and download records, and matching URLs from browser history. Native download records and files stay intact. Browser history entries may briefly appear before removal; this is not an incognito feature.</p><form id="blacklist-form" class="domain-form"><input id="blacklist-input" placeholder="example.com" aria-label="Domain to blacklist" required><button class="button primary" type="submit">Add domain…</button></form><div id="blacklist-list"></div></section>
+    <section><h3>Backup & restore</h3><p>Export regularly to protect your archive. Backups are plain JSON files containing private URLs, titles, dates, and download paths. Store them somewhere you trust.</p><div class="backup-actions"><button id="backup" class="button">↓ Export full archive</button><button id="restore-button" class="button">↑ Restore backup…</button></div><p>Restore merges records without duplicates and respects your current blacklist. It can restore entries deleted since the backup. Blacklist rules in the file are kept for reference; add them manually if needed. Downloaded files are not backed up.</p></section>
+    <section><h3>Storage & cleanup</h3><p>The sidebar shows estimated disk use for this extension, including database overhead and small deletion markers that prevent removed records from returning during import. The browser manages database compaction, so disk use may not fall immediately after deletion.</p><button id="clear-all" class="button danger">Delete entire archive…</button></section>
+    <section><h3>About The Vault</h3><p>Version 1.14.0 · No analytics or remote scripts. Search looks through saved titles and addresses, not webpage contents. Website icons come from the browser’s favicon service. Tabs from other devices require your browser’s own sync. Download history stores metadata only.</p></section>
+  </dialog>
+  <div id="date-popover" class="date-popover" popover role="dialog" aria-labelledby="date-range-title">
+    <form id="date-filter-form">
+      <h3 id="date-range-title">Date range</h3>
+      <div class="calendar-bounds">
+        <div class="calendar-bound"><button id="date-from-select" type="button" class="calendar-bound-select" aria-pressed="true"><span>From</span><strong id="date-from-label">Any date</strong></button><button id="date-from-clear" type="button" class="calendar-bound-clear" aria-label="Clear start date" title="Clear start date" disabled>×</button></div>
+        <div class="calendar-bound"><button id="date-to-select" type="button" class="calendar-bound-select" aria-pressed="false"><span>To</span><strong id="date-to-label">Any date</strong></button><button id="date-to-clear" type="button" class="calendar-bound-clear" aria-label="Clear end date" title="Clear end date" disabled>×</button></div>
+      </div>
+      <div class="calendar-navigation">
+        <button id="calendar-previous" class="icon-button" type="button" aria-label="Previous month" title="Previous month">‹</button>
+        <select id="calendar-month" aria-label="Month"></select>
+        <button id="calendar-next" class="icon-button" type="button" aria-label="Next month" title="Next month">›</button>
+        <select id="calendar-year" aria-label="Year"></select>
+      </div>
+      <p id="calendar-legend" class="date-help">Underlined days have saved history.</p>
+      <div id="calendar-weekdays" class="calendar-weekdays" aria-hidden="true"></div>
+      <div id="calendar-grid" class="calendar-grid" role="grid" aria-label="Calendar"></div>
+      <p id="calendar-status" class="date-help calendar-status" role="status" aria-live="polite">Choose the first day of your range.</p>
+      
+      <div id="calendar-toast" role="status" hidden></div>
+      <p id="date-error" class="date-error" role="alert" hidden></p>
+      <div class="date-actions"><button id="date-clear" type="button" class="text-button">Clear dates</button><button id="date-cancel" type="button" class="button">Cancel</button><button type="submit" class="button primary">Apply</button></div>
+    </form>
+  </div>
+  <input type="file" id="restore-file" accept=".json,application/json" hidden>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>
+

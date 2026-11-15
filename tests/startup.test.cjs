@@ -1,0 +1,13 @@
+const {chromium}=require('playwright'),assert=require('assert/strict'),fs=require('fs/promises'),path=require('path');
+const extension=path.resolve(__dirname,'..'),root=path.resolve(extension,'../..'),profile=path.join(root,'work','startup-'+Date.now());let context,base;
+async function launch(start=false){context=await chromium.launchPersistentContext(profile,{executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,viewport:{width:1200,height:850},ignoreDefaultArgs:['--disable-extensions'],args:['--enable-unsafe-extension-debugging',...(start?['--restore-last-session']:[])]});if(start){const cdp=await context.browser().newBrowserCDPSession();const {extensions}=await cdp.send('Extensions.getExtensions');if(!extensions.some(e=>e.name==='History Vault'))await cdp.send('Extensions.loadUnpacked',{path:extension});await cdp.detach();}}
+async function ready(page){await page.locator('#timeline').waitFor();await page.waitForFunction(()=>document.querySelector('#result-count').textContent.includes('records'));assert.equal(await page.title(),'History Vault');assert.equal(await page.locator('.brand-icon').evaluate(img=>img.complete&&img.naturalWidth>0),true);const icon=await page.locator('link[rel="icon"]').first().evaluate(el=>el.href);assert.ok(icon.includes('logo-32.png'));assert.equal(await page.evaluate(url=>new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img.naturalWidth===32);img.onerror=()=>resolve(false);img.src=url;}),icon),true);}
+(async()=>{await launch();const native=await context.newPage();await native.goto('chrome://history/');const cdp=await context.browser().newBrowserCDPSession();await cdp.send('Extensions.loadUnpacked',{path:extension});await cdp.detach();const worker=context.serviceWorkers()[0]||await context.waitForEvent('serviceworker');base=worker.url().replace('background.js','history.html');await ready(native);console.log('PASS native history tab recovered when extension starts');
+ const page=await context.newPage();await page.goto(base);await ready(page);await page.screenshot({path:path.join(root,'work','branding.png')});await page.goto('chrome://history/');await ready(page);console.log('PASS history navigation and explicit favicon assets');
+ for(let i=0;i<2;i++){await context.close();await launch(true);const started=context.pages().find(p=>p.url().includes('history'))||await context.newPage();if(!started.url().includes('history'))try{await started.goto('chrome://history/');}catch(error){if(!error.message.includes('ERR_ABORTED'))throw error;}await ready(started);console.log('PASS browser restart '+(i+1));}
+})().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(context)await context.close();});
+
+
+
+
+

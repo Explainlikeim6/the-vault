@@ -1,0 +1,14 @@
+{
+  "name": "history-vault",
+  "private": true,
+  "version": "1.14.0",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/core.test.mjs tests/calendar.test.mjs tests/selection.test.mjs tests/history-route.test.mjs tests/download.test.mjs",
+    "test:browser": "node tests/browser.test.cjs",
+    "test:features": "node tests/ui.test.cjs",
+    "test:selection": "node tests/interaction.test.cjs",
+    "test:downloads": "node tests/download.test.cjs",
+    "test:calendar": "node tests/calendar-ui.test.cjs"
+  }
+}
