@@ -1,6 +1,7 @@
 {
   "name": "history-vault",
   "private": true,
+  "license": "MIT",
   "version": "1.14.0",
   "type": "module",
   "scripts": {
