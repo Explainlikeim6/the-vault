@@ -57,4 +57,8 @@ No build step is needed. Install this folder directly. Run npm test with Node.js
 
 Report problems through this repository’s **Issues** tab. Include browser/version, extension version, and reproduction steps. Remove private URLs, titles, filenames, and personal data from screenshots and backups before sharing them.
 
-No open-source license has been selected yet; this repository does not grant a general license to redistribute or modify the source.
+## License and acknowledgment
+
+The Vault is shared under the [MIT License](LICENSE). You are welcome to use, modify, share, and build upon it, including commercially, while preserving the copyright and license notice as required by MIT.
+
+If you share or build upon this project, I would appreciate a mention of **Explainlikeim6** as its original creator and a link to [The Vault](https://github.com/Explainlikeim6/the-vault). This acknowledgment is appreciated, but is not an additional license requirement.
