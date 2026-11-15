@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.15.0
+
+- Remove the redundant About link. Archive settings remain in the sidebar.
+- Replace result pagination with automatic loading while scrolling; retain selections and include unloaded matches in Select all and filtered deletion.
+
 ## 1.14.0
 
 - Rename the extension to The Vault - a permanent history.

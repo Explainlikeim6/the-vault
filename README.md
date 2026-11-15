@@ -9,7 +9,7 @@ The Vault imports the history your browser still has, then records new visits an
 - Search titles, URLs, domains, timestamps, and download filenames, with keywords or exact phrases.
 - Browse by day, optionally group by hour, and filter with a visual date-range calendar showing days with saved records.
 - Keep Browsing and Downloads in separate views, with website and file-type icons.
-- Select entries individually, with Shift-click, or by dragging; select every search match across pages.
+- Select entries individually, with Shift-click, or by dragging; select every search match across loaded entries.
 - Delete individual records, a URL, a domain, an hour/day, or search results after reviewing a confirmation.
 - Blacklist domains and subdomains, and use right-click search, deletion, and blacklist shortcuts.
 - View and search tabs from other devices exposed by your browser’s own sync.
@@ -41,7 +41,7 @@ Use **Export** to save the full archive as JSON. **Import** merges a backup, val
 
 The archive belongs to one extension installation in one browser profile. Uninstalling the extension or deleting that profile removes it. Export before moving to another browser, folder, or future store installation, then import there.
 
-For an existing unpacked installation, close archive tabs, replace files **inside the same installed folder**, and click **Reload** on the Extensions page. Keep that folder in place. Version 1.14.0 retains the existing database and backup format, including archives from History Vault.
+For an existing unpacked installation, close archive tabs, replace files **inside the same installed folder**, and click **Reload** on the Extensions page. Keep that folder in place. Version 1.15.0 retains the existing database and backup format, including archives from History Vault.
 
 ## Privacy and storage
 

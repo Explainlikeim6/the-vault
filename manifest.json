@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "The Vault - a permanent history",
   "short_name": "The Vault",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "Keep a private, searchable local archive of browsing and download history. Retain it until you choose to delete it.",
   "minimum_chrome_version": "120",
   "permissions": [

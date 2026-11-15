@@ -1,3 +1,7 @@
+# Version 1.15 scrolling update
+
+Chrome tests/scroll.test.cjs passes: four consecutive batches, tied timestamps without duplicate rows, retained selection, end marker, filter reset, and no hidden-view loading. Updated interaction suite passes, including selection of unloaded matches and deletion. Earlier verification below applies to prior releases.
+
 # Version 1.13.1 layout update
 
 Month/year spacing adjusted to the supplied reference. The Chrome calendar suite was rerun and the popup checked at desktop and narrow viewport sizes. Calendar logic, archive storage, and permissions are unchanged. The checks below document version 1.13.

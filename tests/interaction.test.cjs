@@ -98,8 +98,8 @@ async function drag(first,last,{title=false}={}){
     assert.ok(selection.x+selection.width<=utilities.x,'selection controls do not overlap at '+width);
   }
   await ui.setViewportSize({width:1440,height:900});
-  await ui.locator('#next').click();await until(async()=>await ui.locator('.history-row').count()===27,'second page');
-  assert.equal(await ui.locator('.history-row input:checked').count(),27);
+  await ui.evaluate(()=>window.scrollTo(0,document.body.scrollHeight));await until(async()=>await ui.locator('.history-row').count()===127,'remaining results appended');
+  assert.equal(await ui.locator('.history-row input:checked').count(),127);
   await ui.locator('#select-all-selected').click();await until(async()=>(await ui.locator('#selected-count').innerText())==='127 selected','reselect all');
   await ui.locator('#delete-selected').click();await ui.locator('#confirm-dialog').waitFor({state:'visible'});
   assert.match(await ui.locator('#confirm-title').innerText(),/127 records/);assert.equal(await ui.locator('#browser-too').isChecked(),false);
@@ -117,7 +117,7 @@ async function drag(first,last,{title=false}={}){
   await until(async()=>!(await ui.locator('#timeline').getAttribute('aria-busy')==='true'),'deletion finished');
   assert.equal((await query({text:'KeepFixture'})).total,8);
   assert.ok((await ui.evaluate(()=>chrome.history.getVisits({url:'https://selection.test/target/0'}))).length>0);
-  console.log('PASS all 127 matches selected across pages, exact confirmation, cancel, and deletion leaving unrelated/native records');
+  console.log('PASS all 127 matches selected including unloaded matches, exact confirmation, cancel, and deletion leaving unrelated/native records');
 
   await ui.locator('#search').fill('');await until(async()=>(await ui.locator('.history-row').count())>=8,'remaining visits');
   const [download]=await Promise.all([ui.waitForEvent('download'),ui.locator('#backup-top').click()]);

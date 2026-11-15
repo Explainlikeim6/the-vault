@@ -66,9 +66,9 @@
         </div>
         <div id="exact-url" class="notice" hidden></div>
         <div id="timeline" aria-label="History results" aria-busy="true"></div>
-        <div class="pagination"><button id="prev" class="button">← Previous</button><span id="page-label"></span><button id="next" class="button">Next →</button></div>
+        <div id="scroll-status" class="scroll-status" role="status" aria-live="polite"></div>
+        <div id="scroll-sentinel" aria-hidden="true"></div>
         <span id="result-count" class="sr-only" aria-live="polite">Loading…</span>
-        <footer><button id="about-open" class="text-button">About your archive</button></footer>
       </section>
       <section id="devices-view" aria-labelledby="devices-title" hidden>
         <div class="results-toolbar devices-toolbar"><div class="results-label"><h2 id="devices-title">Tabs from other devices</h2><span id="devices-count" aria-live="polite"></span></div><button class="button" id="devices-refresh">Refresh tabs</button></div>
@@ -92,7 +92,7 @@
     <section><h3>Domain blacklist</h3><p>Exclude a domain and all its subdomains. Adding a rule also deletes existing matching archived visits and download records, and matching URLs from browser history. Native download records and files stay intact. Browser history entries may briefly appear before removal; this is not an incognito feature.</p><form id="blacklist-form" class="domain-form"><input id="blacklist-input" placeholder="example.com" aria-label="Domain to blacklist" required><button class="button primary" type="submit">Add domain…</button></form><div id="blacklist-list"></div></section>
     <section><h3>Backup & restore</h3><p>Export regularly to protect your archive. Backups are plain JSON files containing private URLs, titles, dates, and download paths. Store them somewhere you trust.</p><div class="backup-actions"><button id="backup" class="button">↓ Export full archive</button><button id="restore-button" class="button">↑ Restore backup…</button></div><p>Restore merges records without duplicates and respects your current blacklist. It can restore entries deleted since the backup. Blacklist rules in the file are kept for reference; add them manually if needed. Downloaded files are not backed up.</p></section>
     <section><h3>Storage & cleanup</h3><p>The sidebar shows estimated disk use for this extension, including database overhead and small deletion markers that prevent removed records from returning during import. The browser manages database compaction, so disk use may not fall immediately after deletion.</p><button id="clear-all" class="button danger">Delete entire archive…</button></section>
-    <section><h3>About The Vault</h3><p>Version 1.14.0 · No analytics or remote scripts. Search looks through saved titles and addresses, not webpage contents. Website icons come from the browser’s favicon service. Tabs from other devices require your browser’s own sync. Download history stores metadata only.</p></section>
+    <section><h3>About The Vault</h3><p>Version 1.15.0 · No analytics or remote scripts. Search looks through saved titles and addresses, not webpage contents. Website icons come from the browser’s favicon service. Tabs from other devices require your browser’s own sync. Download history stores metadata only.</p></section>
   </dialog>
   <div id="date-popover" class="date-popover" popover role="dialog" aria-labelledby="date-range-title">
     <form id="date-filter-form">

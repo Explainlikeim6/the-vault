@@ -8,7 +8,7 @@
 - The calendar’s **From** and **To** buttons adjust each endpoint. Clear either date for an open-ended range. Selected days are included in full.
 - Click the date chip to edit the range; its × button clears only dates. **Reset filters** clears text, dates, and any contextual domain/URL restriction. Cancel, Escape, or clicking outside the date popup discards unapplied changes.
 - Enter an ISO timestamp fragment, such as `2026-11-03`, to match UTC dates in the search box. Use the date filters for precise local-time searches. Group headings and displayed visit times use your device's local timezone.
-- Results are grouped by day, newest first, with 100 records per page. Use **View options (⋯) → Group by hour** when you want hour headings. The search field receives focus when you open the archive. Press `/` to return to it.
+- Results are grouped by day, newest first, with automatic loading as you scroll down. Use **View options (⋯) → Group by hour** when you want hour headings. The search field receives focus when you open the archive. Press `/` to return to it.
 - Click a title to revisit its original address. For a download, this opens its source URL; use its **··· → Show in folder** action to locate the file if its native download record still exists.
 - Generated blob/data downloads also retain metadata. Their titles do not reopen temporary or inline URLs. Inline file contents are excluded from stored data URLs.
 
@@ -23,14 +23,14 @@ Sign in to the same **browser** account on each device and enable open-tab sync 
 ## Select and delete search matches
 
 1. Search for a word, domain, URL, or phrase. Add a date/type filter if needed.
-2. **Select all (N)** appears beside the search. It selects all matching archived records across every results page, including matches not currently visible.
+2. **Select all (N)** appears beside the search. It selects all matching archived records including results not yet loaded, including matches not currently visible.
 3. Click the **red trash icon / Delete** button. Review the exact record count and confirm. Cancel leaves the archive intact.
 
 The red trash icon beside the search can also open a deletion preview directly for all matching results. Deletion defaults to the local archive; broader native-browser deletion is an explicit checkbox in the preview.
 
 Click checkboxes or an empty part of a row to select individual records. **Shift + click** selects a continuous visible range. **Click and drag across rows** selects a range; starting on an already selected row deselects the dragged range. Selections outside that range stay selected. Dragging near the top/bottom edge scrolls the page. Dragging is enabled for a mouse or pen; touch gestures keep normal scrolling, with checkboxes for selection.
 
-A normal title click opens its URL. Dragging from a title selects rows without opening a tab. Selection is preserved when paging; changing search/type/date filters clears it. **Select all** spans all pages; **Cancel selection (×)** clears the selection. Day-header checkboxes select that day’s visible records.
+A normal title click opens its URL. Dragging from a title selects rows without opening a tab. Selection is preserved as more results load; changing search/type/date filters clears it. **Select all** includes results not yet loaded; **Cancel selection (×)** clears the selection. Day-header checkboxes select that day’s visible records.
 
 ## Delete exactly what you mean
 
@@ -42,11 +42,11 @@ Every deletion presents a confirmation before it runs. Cancellation does not cha
 | Browsing row **··· → Delete all records for this URL** | All archived browsing records for the exact URL |
 | Row **··· → Delete all records for this domain** | Browsing records for the domain and all subdomains, across all dates |
 | Row menu **Delete this hour** / day menu **Delete this day** | All records in the current section (Browsing or Downloads) in that local hour/day, including records hidden by current search filters |
-| Checkboxes + **Delete selected** | Selected records across pages; Shift-click or drag selects/deselects a range on the visible page |
-| Search toolbar **red trash icon** | All matches across every page, using current filters |
+| Checkboxes + **Delete selected** | Selected records across loaded entries; Shift-click or drag selects/deselects a range on the visible page |
+| Search toolbar **red trash icon** | All matches including results not yet loaded, using current filters |
 | Settings → **Delete entire archive** | All currently archived visits and download records; blacklist rules stay |
 
-The confirmation uses an exact snapshot of record IDs. Records arriving after that preview are not included. Changing filters clears the selection; paging preserves it. Records arriving after Select all are not automatically added to that snapshot.
+The confirmation uses an exact snapshot of record IDs. Records arriving after that preview are not included. Changing filters clears the selection; loading more results preserves it. Records arriving after Select all are not automatically added to that snapshot.
 
 **By default, deletion changes only the archive.** You can explicitly select **Also delete from the browser’s separate history** in the confirmation. Chrome's API deletes **every native visit to each selected URL**, including visits outside your selection. The interface warns about this. Native download-record deletion never deletes downloaded files. If a browser deletion fails, the archive deletion still succeeds and the result reports the browser failure.
 
