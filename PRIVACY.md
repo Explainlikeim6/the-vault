@@ -13,3 +13,9 @@ The extension does not run in private/incognito browsing. History exposed by nat
 Theme, sidebar, and hour-grouping preferences stay in local storage. File existence checks use the browser’s download metadata and do not read file contents. Native file icons are requested from the browser. Restored entries do not import native download IDs or assume the original file-existence status. Copy link writes the selected download address to your clipboard when you click it. Row selection and drag gestures stay inside the extension page; no extra page access or network permissions are requested. Upgrading from the previous folder-backup version clears its saved directory handles, settings, and scheduled alarm without deleting existing backup files. Manual restore remains compatible with older JSON backups.
 
 Uninstalling the extension or deleting its browser profile removes its local archive. Export first if you intend to keep it.
+
+## Purpose, sharing, and Limited Use
+
+Saved metadata is used only to provide the archive, search, cleanup, manual backup, and browsing-activity features described in the extension. The developer does not receive or access users' archives. User data is not sold or shared for advertising, creditworthiness, or lending purposes. The use of information received from Google APIs will adhere to the Chrome Web Store User Data Policy, including the Limited Use requirements.
+
+Users can view and delete saved records in the archive and export their own data using Export. There is no automatic retention limit; users control deletion. For questions about this policy, contact Explainlikeim6 through https://github.com/Explainlikeim6/the-vault/issues without posting private history or backup files.
